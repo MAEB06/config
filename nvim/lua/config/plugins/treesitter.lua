@@ -1,53 +1,62 @@
 return {
-    "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPre", "BufNewFile" },
-    build = "TSUpdate",
-    config = function()
-        local treesitter = require("nvim-treesitter.configs")
+	"nvim-treesitter/nvim-treesitter",
+	event = { "BufReadPre", "BufNewFile" },
+	build = ":TSUpdate",
+	config = function()
+		local treesitter = require("nvim-treesitter.configs")
 
-        treesitter.setup({
-            highlight = {
-                enable = true,
-            },
+		treesitter.setup({
+			-- Auto-install missing parsers
+			auto_install = true,
 
-            ident = { enable = true },
+			highlight = {
+				enable = true,
+				-- Disable for large files to prevent hangs
+				disable = function(lang, buf)
+					local max_filesize = 100 * 1024 -- 100 KB
+					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+					if ok and stats and stats.size > max_filesize then
+						return true
+					end
+				end,
+			},
 
-            ensure_installed = {
-                "json",
-                "javascript",
-                "tsx",
-                "go",
-                "yaml",
-                "html",
-                "css",
-                "python",
-                "http",
-                "prisma",
-                "markdown",
-                "markdown_inline",
-                "svelte",
-                "graphql",
-                "bash",
-                "lua",
-                "vim",
-                "dockerfile",
-                "gitignore",
-                "query",
-                "vimdoc",
-                "c",
-                "java",
-                "rust",
-                "cpp",
-            },
-            incremental_selection = {
-                enabled = true,
-                keymaps = {
-                    init_selection = "<C-space>",
-                    node_incremental = "<C-space>",
-                    scope_incremental = false,
-                },
-            },
-            additional_vim_regex_highlighting = false,
-        })
-    end
+			indent = {
+				enable = true,
+				disable = { "python", "yaml" }, -- These often work better with dedicated plugins
+			},
+
+			-- Only specify languages you actually use
+			ensure_installed = {
+				"c",
+				"cpp",
+				"go",
+				"java",
+				"rust",
+				"python",
+				"lua",
+				"bash",
+				"javascript",
+				"typescript",
+				"html",
+				"css",
+				"json",
+				"yaml",
+				"markdown",
+				"vim",
+				"vimdoc",
+			},
+
+			incremental_selection = {
+				enable = true,
+				keymaps = {
+					init_selection = "<C-space>",
+					node_incremental = "<C-space>",
+					node_decremental = "<S-C-space>",
+				},
+			},
+
+			additional_vim_regex_highlighting = false,
+		})
+	end,
 }

@@ -41,18 +41,18 @@ for_window [class="^.*"] border pixel 1
 
 # Startup for polybar
 
-exec --no-startup-id ~/.config/polybar/config/launch.sh
+exec --no-startup-id ~/.config/polybar/launch.sh
 
 # Startup for feh wallpaper
 
-exec --no-startup-id feh --bg-scale /home/Max/Pictures/Nord.png
+exec --no-startup-id xwallpaper --center /home/max/Wall/SilentVoiceNord.jpg
 
 # Set kbxmap to gb
 
 exec --no-startup-id setxkbmap gb
 
 # picom startup for window manager
-exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
+exec_always --no-startup-id picom --config ~/.config/picom.conf -b
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.

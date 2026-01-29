@@ -3,17 +3,17 @@ local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<C-p>", builtin.git_files, {})
 vim.keymap.set("n", "<leader>ps", function()
-    local query = vim.fn.input("Grep > ")
-    if query ~= "" then
-        local cwd = vim.fn.expand("%:p:h")
-        builtin.grep_string({
-            search = query,
-            cwd = cwd,
-            additional_args = { "--ignore-case", "--hidden", "--no-ignore" },
-        })
-    else
-        print("Error: Empty search query")
-    end
+	local query = vim.fn.input("Grep > ")
+	if query ~= "" then
+		local cwd = vim.fn.expand("%:p:h")
+		builtin.grep_string({
+			search = query,
+			cwd = cwd,
+			additional_args = { "--ignore-case", "--hidden", "--no-ignore" },
+		})
+	else
+		print("Error: Empty search query")
+	end
 end)
 
 vim.keymap.set("n", "<leader>U", vim.cmd.UndotreeToggle)
@@ -45,23 +45,30 @@ vim.keymap.set("n", "<leader>Y", '"+Y')
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open LSP diagnostic" })
 
 vim.keymap.set("n", "<leader>r", function()
-    vim.cmd("write")
+	vim.cmd("write")
 
-    local ft = vim.bo.filetype
-    local filename = vim.fn.expand("%")
-    local basename = vim.fn.expand("%:r")
+	local ft = vim.bo.filetype
+	local filename = vim.fn.expand("%")
+	local basename = vim.fn.expand("%:r")
 
-    if ft == "cpp" or ft == "c" then
-        vim.cmd("botright split | resize 10 | terminal g++ " .. filename .. " -o " .. basename .. " && ./" .. basename)
-    elseif ft == "python" then
-        vim.cmd("botright split | resize 10 | terminal python3 " .. filename)
-    elseif ft == "java" then
-        vim.cmd("botright split | resize 10 | terminal javac " .. filename .. " && java " .. basename)
-    elseif ft == "lua" then
-        vim.cmd("botright split | resize 10 | terminal lua " .. filename)
-    elseif ft == "csharp" then
-        vim.cmd("botright split | resize 10 | terminal mcs " .. filename .. " && mono " .. basename .. ".exe")
-    else
-        print("No run command configured for filetype: " .. ft)
-    end
+	if ft == "cpp" or ft == "c" then
+		vim.cmd("botright split | resize 10 | terminal g++ " .. filename .. " -o " .. basename .. " && ./" .. basename)
+	elseif ft == "python" then
+		vim.cmd("botright split | resize 10 | terminal python3 " .. filename)
+	elseif ft == "java" then
+		vim.cmd("botright split | resize 10 | terminal javac " .. filename .. " && java " .. basename)
+	elseif ft == "lua" then
+		vim.cmd("botright split | resize 10 | terminal lua " .. filename)
+	elseif ft == "csharp" then
+		vim.cmd("botright split | resize 10 | terminal mcs " .. filename .. " && mono " .. basename .. ".exe")
+	else
+		print("No run command configured for filetype: " .. ft)
+	end
 end, { desc = "Compile and run current file based on filetype" })
+
+-- Copy full path of current file
+vim.keymap.set("n", "<leader>cf", function()
+	local path = vim.fn.expand("%:p")
+	vim.fn.setreg("+", path) -- Copy to system clipboard
+	vim.notify("Copied: " .. path, vim.log.levels.INFO, { timeout = 1500 })
+end, { desc = "Copy file path" })
