@@ -1,27 +1,27 @@
-# 🐧 My Linux Configuration Files
+# My Linux Configuration Files (OUTDATED)
 
 A collection of my personal Linux configuration files (some of which were taken from other users repositories)
 
-## 📋 Overview
+## Overview
 
 This repository mainly just consists of  common nordic theme and nvim plugins for creating a basic IDE
 
-## 🎨 Theme
+## Theme
 
 - **Main Theme**: `Nordic`
 - **Color Scheme**: Consistent Nordic palette across all/most applications
 - **Terminal**: **Alacritty** with Nordic colors
 
-## 🔧 Core Components
+## Core Components
 
 ### **Neovim**
 - **Configuration Language**: Lua
 - **Plugin Manager**: Lazy.nvim
 - **Key Features**:
-  - ✅ LSP support for multiple languages
-  - 🔍 Telescope fuzzy finder
-  - 🌳 Treesitter syntax highlighting
-  - ❄️ Nord color scheme integration
+  - LSP support for multiple languages
+  - Telescope fuzzy finder
+  - Treesitter syntax highlighting
+  - Nord color scheme integration
 
 ### **i3 Window Manager**
 - **Gaps**: Smart gaps with i3-gaps
@@ -33,7 +33,7 @@ This repository mainly just consists of  common nordic theme and nvim plugins fo
 - **Font**: JetBrains Mono Nerd Font 
 - **Colors**: Nordic theme palette
 
-## 📦 Plugin Highlights
+## Plugin Highlights
 
 ### Neovim Plugins
 - `nvim-treesitter` - Enhanced syntax highlighting
